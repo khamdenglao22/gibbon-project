@@ -1,6 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
 import {
   Menu,
   X,
@@ -42,25 +48,32 @@ const NavHeader = () => {
       subItems: [
         { name: "Project Origin", url: "/project-origin" },
         { name: "Vision", url: "/vision" },
+        { name: "The Nam Kan National Park", url: "/nam-kan" },
       ],
     },
     {
       name: "what we do",
       subItems: [
-        { name: "Treetop Architecture", url: "/treetop-architecture" },
-        { name: "Zip down to the top !", url: "/zip-down" },
+        { name: "Treetop Architecture", url: "/tree-top-architecture" },
+        { name: "Zip down to the top !", url: "/zip-down-to-the-top" },
         { name: "National Park Patrols", url: "/national-park-patrols" },
         { name: "Sustainable Agriculture", url: "/sustainable-agriculture" },
+        { name: "trend-setting tourism", url: "/trend-setting-tourism" },
+        {
+          name: "medicinal plant book edition",
+          url: "/medicinal-plant-book-edition",
+        },
       ],
     },
     {
       name: "book now",
       subItems: [
-        { name: "Treetop Stays", url: "/book-treetop-stays" },
-        { name: "Zipline Adventures", url: "/book-zipline-adventures" },
+        { name: "giant loop", url: "/giant-loop" },
+        { name: "classic tour", url: "/classic-tour" },
+        { name: "honeymoon tour", url: "/honeymoon-tour" },
       ],
     },
-    { name: "faq", url: "/about" },
+    { name: "faq", url: "/frequently-asked-questions" },
     { name: "Contact", url: "/contact" },
   ];
 
@@ -70,22 +83,20 @@ const NavHeader = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled
-            ? "bg-slate-950/95 backdrop-blur-md shadow-lg"
-            : "bg-slate-950/60"
+          isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg" : "bg-white/70"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative w-2xs h-10 md:h-12 lg:h-16 cursor-pointer"
+            className="relative w-32 h-12 cursor-pointer"
           >
             <Image
               src="/logoGB.png"
-              alt="Slide 1"
+              alt="Logo"
               fill
-              className="object-cover"
+              className="object-contain invert-100"
               priority
             />
           </motion.div>
@@ -94,14 +105,13 @@ const NavHeader = () => {
           <div className="hidden md:flex items-center gap-8">
             {menuItems.map((item, i) => (
               <div key={item.name} className="relative group">
-                {/* Main menu item */}
                 {item.url ? (
                   <Link href={item.url}>
                     <motion.span
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="hover:text-emerald-400 uppercase transition-colors cursor-pointer flex items-center"
+                      className="hover:text-emerald-600 uppercase transition-colors cursor-pointer flex items-center"
                     >
                       {item.name}
                     </motion.span>
@@ -111,23 +121,22 @@ const NavHeader = () => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="hover:text-emerald-400 uppercase transition-colors cursor-pointer flex items-center"
+                    className="hover:text-emerald-600 uppercase transition-colors cursor-pointer flex items-center"
                   >
                     {item.name}
-                    {item.subItems && <ChevronDown className="ml-1 w-5 h-5" />}
+                    <ChevronDown className="ml-1 w-5 h-5" />
                   </motion.span>
                 )}
-
-                {/* Dropdown menu (if subItems exist) */}
                 {item.subItems && (
-                  <div className="absolute left-0 p-2.5 top-full w-max hidden group-hover:block ">
-                    <div className="bg-white shadow-lg rounded-lg pt-2">
-                      <div className="w-4 h-4 absolute bg-white top-[10px] left-[40px] transform -translate-x-1/2 -translate-y-1/2 rotate-45 rounded"></div>
+                  <div className="absolute left-0 pt-2.5 top-full w-max hidden group-hover:block">
+                    <div className="w-4 h-4 absolute z-10 bg-white border border-gray-200 top-[10px] left-[40px] transform -translate-x-1/2 -translate-y-1/2 rotate-45 rounded"></div>
+
+                    <div className="bg-white border relative z-30 border-gray-200 rounded-lg shadow-md pt-2">
                       {item.subItems.map((sub, j) => (
                         <Link
                           key={j}
                           href={sub.url}
-                          className="block capitalize px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-500 rounded"
+                          className="block capitalize px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"
                         >
                           {sub.name}
                         </Link>
@@ -142,7 +151,7 @@ const NavHeader = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white"
+            className="md:hidden text-gray-900"
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -155,38 +164,31 @@ const NavHeader = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-slate-900 border-t border-slate-800 overflow-hidden"
+              className="md:hidden bg-white border-t border-gray-200"
             >
               {menuItems.map((item, i) => (
                 <div key={item.name}>
-                  {/* Parent Menu Item */}
                   {item.url ? (
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
+                    <Link
+                      href={item.url}
+                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                      className="block px-6 py-4 uppercase text-gray-800 hover:bg-gray-100"
                     >
-                      <Link
-                        href={item.url}
-                        className="block px-6 uppercase py-4 hover:bg-slate-800 transition-colors text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    </motion.div>
+                      {item.name}
+                    </Link>
                   ) : (
-                    <div className="block px-6 py-4 uppercase text-white font-semibold">
+                    <div className="px-6 py-4 uppercase font-semibold text-gray-800">
                       {item.name}
                     </div>
                   )}
-
-                  {/* Submenu */}
                   {item.subItems && (
                     <div className="pl-10">
                       {item.subItems.map((sub) => (
                         <Link
                           key={sub.name}
                           href={sub.url}
-                          className="block px-6 py-2 text-sm capitalize text-gray-300 hover:text-white hover:bg-slate-800 transition-colors"
+                          onClick={() => setIsMenuOpen(!isMenuOpen)}
+                          className="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                         >
                           {sub.name}
                         </Link>
