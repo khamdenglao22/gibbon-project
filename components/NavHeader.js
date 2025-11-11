@@ -131,7 +131,7 @@ const NavHeader = () => {
                   <div className="absolute left-0 pt-2.5 top-full w-max hidden group-hover:block">
                     <div className="w-4 h-4 absolute z-10 bg-white border border-gray-200 top-[10px] left-[40px] transform -translate-x-1/2 -translate-y-1/2 rotate-45 rounded"></div>
 
-                    <div className="bg-white border relative z-30 border-gray-200 rounded-lg shadow-md pt-2">
+                    <div className="bg-white relative z-30 rounded-lg shadow-md overflow-hidden">
                       {item.subItems.map((sub, j) => (
                         <Link
                           key={j}
